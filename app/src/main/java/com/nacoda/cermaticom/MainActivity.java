@@ -1,6 +1,7 @@
 package com.nacoda.cermaticom;
 
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     @InjectView(R.id.rcMain)
     RecyclerView rcMain;
     GsonGithub gsonGithub;
+    String saveResponse;
     StringRequest stringRequest;
     RequestQueue requestQueue;
     MainAdapter adapter;
@@ -97,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(MainActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "No Internet", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -130,5 +132,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         return true;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        outState.putString("response", saveResponse);
     }
 }
